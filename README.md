@@ -47,7 +47,7 @@ Excel para análisis
 
 La aplicación busca conectar una **operación de campo** con un **proceso
 de datos**, sin necesidad de una aplicación móvil nativa ni de un
-backend para esta versión.
+backend en un servidor, todo corre local.
 
 ------------------------------------------------------------------------
 
