@@ -1,4 +1,4 @@
-# 📍 GeoVisit
+# 🌎 GeoVisit
 
 ### De una agenda de visitas a datos georreferenciados listos para analizar
 
@@ -440,11 +440,6 @@ entorno corporativo deben evaluarse las políticas aplicables de:
 
 **Diego Araujo**
 
-`Data Analytics` · `Automatización` · `Optimización de procesos` ·
-`Geolocalización` · `Herramientas de negocio`
+Licenciado en Estadística
 
-------------------------------------------------------------------------
-
-### GeoVisit
-
-**Planificar. Registrar. Validar. Analizar.**
+`Data Analytics` | `Automatización` | `Optimización de procesos` | `Geolocalización` | `Herramientas de negocio`
