@@ -6,12 +6,7 @@
 y validar visitas en campo mediante geolocalización**, con importación y
 exportación a Excel.
 
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white">
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/Geolocation_API-4285F4?style=flat&logo=googlemaps&logoColor=white">
-<img src="https://img.shields.io/badge/SheetJS-217346?style=flat&logo=microsoftexcel&logoColor=white">
-<img src="https://img.shields.io/badge/OpenStreetMap-7EBC6F?style=flat&logo=openstreetmap&logoColor=white">
+<p><img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white" alt="HTML5"> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white" alt="CSS3"> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black" alt="JavaScript"> <img src="https://img.shields.io/badge/Geolocation_API-4285F4?style=flat&logo=googlemaps&logoColor=white" alt="Geolocation API"> <img src="https://img.shields.io/badge/SheetJS-217346?style=flat&logo=microsoftexcel&logoColor=white" alt="SheetJS"> <img src="https://img.shields.io/badge/OpenStreetMap-7EBC6F?style=flat&logo=openstreetmap&logoColor=white" alt="OpenStreetMap"></p>
 
 ------------------------------------------------------------------------
 
