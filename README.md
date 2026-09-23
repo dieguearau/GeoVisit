@@ -10,7 +10,7 @@ exportación a Excel.
 
 ------------------------------------------------------------------------
 
-## 💡 La idea
+## 💡 ¿Qué problema busca resolver?
 
 Una visita en campo genera información que después puede ser difícil de
 estructurar:
@@ -47,7 +47,7 @@ backend para esta versión.
 
 ## ✨ ¿Qué permite hacer?
 
-### 📅 Planificar visitas desde Excel
+### 📅 Planificar visitas desde base importada
 
 GeoVisit permite importar una agenda con puntos previamente definidos.
 
@@ -173,9 +173,6 @@ Visita pendiente                 → no se exporta
 
 # 🧩 ¿Qué demuestra este proyecto?
 
-GeoVisit no busca ser únicamente una demostración de
-`navigator.geolocation`.
-
 El proyecto integra en una sola herramienta:
 
 **Data Wrangling**  
@@ -240,7 +237,7 @@ Para esta versión:
 - No existe una base de datos central.
 - No existe un backend propio.
 - Los registros de trabajo se almacenan localmente en el navegador.
-- GitHub Pages puede utilizarse para distribuir la aplicación mediante
+- GitHub Pages se utiliza para distribuir la aplicación mediante
   HTTPS.
 
 ------------------------------------------------------------------------
@@ -405,56 +402,6 @@ presencia física.
 
 ------------------------------------------------------------------------
 
-# 🚀 Publicación con GitHub Pages
-
-GeoVisit puede ejecutarse como sitio web estático.
-
-Una estructura mínima del repositorio puede ser:
-
-``` text
-GeoVisit/
-│
-├── index.html
-├── README.md
-└── assets/
-    └── screenshots/
-```
-
-Para publicar:
-
-1.  Renombrar la aplicación como `index.html`.
-2.  Subir los archivos al repositorio.
-3.  Abrir **Settings → Pages**.
-4.  Seleccionar **Deploy from a branch**.
-5.  Seleccionar `main`.
-6.  Seleccionar `/ (root)`.
-7.  Guardar.
-
-Una vez publicada mediante HTTPS, la aplicación puede solicitar acceso a
-la geolocalización en navegadores compatibles.
-
-------------------------------------------------------------------------
-
-# 🗺️ Roadmap
-
-GeoVisit se encuentra actualmente en etapa de **MVP funcional**.
-
-Posibles evoluciones:
-
-- [ ] Persistencia mediante IndexedDB.
-- [ ] Conversión a PWA.
-- [ ] Funcionamiento offline.
-- [ ] Dashboard de cumplimiento.
-- [ ] Agenda sobre mapa.
-- [ ] Reglas configurables de distancia.
-- [ ] Optimización de rutas.
-- [ ] Autenticación.
-- [ ] Sincronización con backend.
-- [ ] Integración con CRM.
-- [ ] Gestión de múltiples usuarios.
-
-------------------------------------------------------------------------
-
 # 💼 Casos de uso
 
 Aunque el MVP utiliza contratos como identificador, el concepto puede
@@ -477,8 +424,6 @@ visitarse.
 
 # ⚠️ Alcance del proyecto
 
-GeoVisit es un **proyecto demostrativo / Proof of Concept**.
-
 Antes de utilizar una solución de este tipo con información real en un
 entorno corporativo deben evaluarse las políticas aplicables de:
 
@@ -489,17 +434,11 @@ entorno corporativo deben evaluarse las políticas aplicables de:
 - servicios externos;
 - acceso de usuarios.
 
-Las capturas, ejemplos y datos publicados en este repositorio deberían
-utilizar exclusivamente información ficticia.
-
 ------------------------------------------------------------------------
 
 # 👤 Autor
 
-**Diego A.**
-
-Proyecto desarrollado como parte de un portfolio orientado a la creación
-de soluciones que combinan:
+**Diego Araujo**
 
 `Data Analytics` · `Automatización` · `Optimización de procesos` ·
 `Geolocalización` · `Herramientas de negocio`
