@@ -18,11 +18,11 @@ exportación a Excel.
 Una visita en campo genera información que después puede ser difícil de
 estructurar:
 
--   📍 ¿Dónde se realizó?
--   🕐 ¿Cuándo se registró?
--   🎯 ¿Coincide con el punto que debía visitarse?
--   📋 ¿Cuál fue el resultado?
--   📊 ¿Cómo se transforma todo esto en una base lista para analizar?
+- 📍 ¿Dónde se realizó?
+- 🕐 ¿Cuándo se registró?
+- 🎯 ¿Coincide con el punto que debía visitarse?
+- 📋 ¿Cuál fue el resultado?
+- 📊 ¿Cómo se transforma todo esto en una base lista para analizar?
 
 GeoVisit propone un flujo simple:
 
@@ -56,11 +56,11 @@ GeoVisit permite importar una agenda con puntos previamente definidos.
 
 Cada visita puede contener:
 
--   ID de contrato.
--   Cliente.
--   Dirección planificada.
--   Latitud planificada.
--   Longitud planificada.
+- ID de contrato.
+- Cliente.
+- Dirección planificada.
+- Latitud planificada.
+- Longitud planificada.
 
 La aplicación clasifica automáticamente la agenda entre:
 
@@ -75,19 +75,19 @@ También permite filtrar rápidamente las visitas según su estado.
 Al presionar **Registrar visita**, el usuario selecciona un resultado
 estandarizado:
 
--   🟢 **Visitado**
--   🟡 **Requiere seguimiento**
--   🔴 **No localizado**
+- 🟢 **Visitado**
+- 🟡 **Requiere seguimiento**
+- 🔴 **No localizado**
 
 Luego GeoVisit solicita acceso a la ubicación y registra:
 
--   Latitud real.
--   Longitud real.
--   Precisión informada por el dispositivo.
--   Fecha.
--   Hora.
--   Dirección aproximada.
--   Resultado de la visita.
+- Latitud real.
+- Longitud real.
+- Precisión informada por el dispositivo.
+- Fecha.
+- Hora.
+- Dirección aproximada.
+- Resultado de la visita.
 
 El uso de opciones predefinidas evita resultados escritos de distintas
 formas y mejora la calidad de los datos generados.
@@ -146,23 +146,23 @@ HISTORIAL   = trabajo registrado
 
 La exportación contiene exclusivamente el historial de visitas.
 
-  Campo                   Descripción
-  ----------------------- ------------------------------------------------
-  ID Contrato             Identificador del punto visitado
-  Cliente                 Cliente asociado, si corresponde
-  Estado                  Planificada / No planificada
-  Resultado               Resultado seleccionado
-  Dirección planificada   Dirección proveniente de la agenda
-  Latitud planificada     Coordenada esperada
-  Longitud planificada    Coordenada esperada
-  Latitud real            Coordenada registrada
-  Longitud real           Coordenada registrada
-  Distancia (m)           Diferencia entre ambos puntos
-  Precisión (m)           Precisión informada por el dispositivo
-  Fecha                   Fecha del registro
-  Hora                    Hora del registro
-  Dirección real          Dirección obtenida por geocodificación inversa
-  Mapa                    Enlace para visualizar la ubicación
+| Campo                 | Descripción                                    |
+|:----------------------|:-----------------------------------------------|
+| ID Contrato           | Identificador del punto visitado               |
+| Cliente               | Cliente asociado, si corresponde               |
+| Estado                | Planificada / No planificada                   |
+| Resultado             | Resultado seleccionado                         |
+| Dirección planificada | Dirección proveniente de la agenda             |
+| Latitud planificada   | Coordenada esperada                            |
+| Longitud planificada  | Coordenada esperada                            |
+| Latitud real          | Coordenada registrada                          |
+| Longitud real         | Coordenada registrada                          |
+| Distancia (m)         | Diferencia entre ambos puntos                  |
+| Precisión (m)         | Precisión informada por el dispositivo         |
+| Fecha                 | Fecha del registro                             |
+| Hora                  | Hora del registro                              |
+| Dirección real        | Dirección obtenida por geocodificación inversa |
+| Mapa                  | Enlace para visualizar la ubicación            |
 
 Por diseño:
 
@@ -181,25 +181,25 @@ GeoVisit no busca ser únicamente una demostración de
 
 El proyecto integra en una sola herramienta:
 
-**Data Wrangling**\
+**Data Wrangling**  
 Importación, validación, transformación y estructuración de información
 proveniente de Excel.
 
-**Automatización**\
+**Automatización**  
 Reducción de registros manuales y generación automática de variables
 como fecha, hora, ubicación, precisión y distancia.
 
-**Geolocalización**\
+**Geolocalización**  
 Uso de las capacidades del dispositivo para transformar una actividad
 física en información digital.
 
-**Diseño de procesos**\
+**Diseño de procesos**  
 Separación entre planificación, ejecución e historial.
 
-**Calidad de datos**\
+**Calidad de datos**  
 Resultados estandarizados y validaciones para reducir inconsistencias.
 
-**Analítica**\
+**Analítica**  
 Generación de una base estructurada que puede utilizarse posteriormente
 en Excel, Power BI, R, Python u otras herramientas.
 
@@ -240,27 +240,27 @@ GeoVisit funciona principalmente del lado del cliente:
 
 Para esta versión:
 
--   No existe una base de datos central.
--   No existe un backend propio.
--   Los registros de trabajo se almacenan localmente en el navegador.
--   GitHub Pages puede utilizarse para distribuir la aplicación mediante
-    HTTPS.
+- No existe una base de datos central.
+- No existe un backend propio.
+- Los registros de trabajo se almacenan localmente en el navegador.
+- GitHub Pages puede utilizarse para distribuir la aplicación mediante
+  HTTPS.
 
 ------------------------------------------------------------------------
 
 # 🛠️ Stack tecnológico
 
-  Tecnología                      Función
-  ------------------------------- ------------------------------------
-  **HTML5**                       Estructura de la aplicación
-  **CSS3**                        Diseño responsive e interfaz
-  **JavaScript Vanilla**          Lógica de negocio
-  **Geolocation API**             Captura de ubicación
-  **SheetJS / XLSX**              Importación y exportación de Excel
-  **localStorage**                Persistencia local
-  **Haversine**                   Cálculo de distancia geográfica
-  **OpenStreetMap / Nominatim**   Geocodificación inversa
-  **Google Maps**                 Visualización de coordenadas
+| Tecnología                    | Función                            |
+|:------------------------------|:-----------------------------------|
+| **HTML5**                     | Estructura de la aplicación        |
+| **CSS3**                      | Diseño responsive e interfaz       |
+| **JavaScript Vanilla**        | Lógica de negocio                  |
+| **Geolocation API**           | Captura de ubicación               |
+| **SheetJS / XLSX**            | Importación y exportación de Excel |
+| **localStorage**              | Persistencia local                 |
+| **Haversine**                 | Cálculo de distancia geográfica    |
+| **OpenStreetMap / Nominatim** | Geocodificación inversa            |
+| **Google Maps**               | Visualización de coordenadas       |
 
 ------------------------------------------------------------------------
 
@@ -272,15 +272,15 @@ Presionar **Importar agenda** y seleccionar un archivo Excel.
 
 El archivo debe contener como mínimo:
 
-  ID Contrato     Latitud planificada   Longitud planificada
-  ------------- --------------------- ----------------------
-  10001                    -34.901200             -56.164500
-  10002                    -34.895400             -56.151200
+| ID Contrato | Latitud planificada | Longitud planificada |
+|:------------|--------------------:|---------------------:|
+| 10001       |          -34.901200 |           -56.164500 |
+| 10002       |          -34.895400 |           -56.151200 |
 
 También puede contener:
 
--   `Cliente`
--   `Dirección planificada`
+- `Cliente`
+- `Dirección planificada`
 
 Una vez importado, los registros aparecerán dentro de **Agenda de
 visitas**.
@@ -337,8 +337,8 @@ El registro aparecerá directamente en el historial.
 
 Los resultados se identifican visualmente:
 
-🟢 **Visitado**\
-🟡 **Requiere seguimiento**\
+🟢 **Visitado**  
+🟡 **Requiere seguimiento**  
 🔴 **No localizado**
 
 También se muestran las coordenadas, precisión, distancia, fecha, hora y
@@ -394,13 +394,13 @@ dispositivo mediante la API de geolocalización.
 
 Puede variar según:
 
--   dispositivo;
--   disponibilidad de GPS;
--   señal;
--   permisos;
--   entorno físico;
--   sistema operativo;
--   método utilizado para determinar la ubicación.
+- dispositivo;
+- disponibilidad de GPS;
+- señal;
+- permisos;
+- entorno físico;
+- sistema operativo;
+- método utilizado para determinar la ubicación.
 
 Por este motivo, GeoVisit debe interpretarse como una herramienta de
 registro y apoyo operativo, no como un mecanismo de certificación de
@@ -444,17 +444,17 @@ GeoVisit se encuentra actualmente en etapa de **MVP funcional**.
 
 Posibles evoluciones:
 
--   [ ] Persistencia mediante IndexedDB.
--   [ ] Conversión a PWA.
--   [ ] Funcionamiento offline.
--   [ ] Dashboard de cumplimiento.
--   [ ] Agenda sobre mapa.
--   [ ] Reglas configurables de distancia.
--   [ ] Optimización de rutas.
--   [ ] Autenticación.
--   [ ] Sincronización con backend.
--   [ ] Integración con CRM.
--   [ ] Gestión de múltiples usuarios.
+- [ ] Persistencia mediante IndexedDB.
+- [ ] Conversión a PWA.
+- [ ] Funcionamiento offline.
+- [ ] Dashboard de cumplimiento.
+- [ ] Agenda sobre mapa.
+- [ ] Reglas configurables de distancia.
+- [ ] Optimización de rutas.
+- [ ] Autenticación.
+- [ ] Sincronización con backend.
+- [ ] Integración con CRM.
+- [ ] Gestión de múltiples usuarios.
 
 ------------------------------------------------------------------------
 
@@ -463,14 +463,14 @@ Posibles evoluciones:
 Aunque el MVP utiliza contratos como identificador, el concepto puede
 adaptarse a distintos procesos de trabajo en campo:
 
--   visitas comerciales;
--   instalaciones;
--   mantenimientos;
--   inspecciones;
--   auditorías;
--   relevamientos;
--   verificaciones;
--   servicios técnicos.
+- visitas comerciales;
+- instalaciones;
+- mantenimientos;
+- inspecciones;
+- auditorías;
+- relevamientos;
+- verificaciones;
+- servicios técnicos.
 
 El identificador puede representar un contrato, cliente, orden de
 trabajo, establecimiento, activo o cualquier otro punto que deba
@@ -485,12 +485,12 @@ GeoVisit es un **proyecto demostrativo / Proof of Concept**.
 Antes de utilizar una solución de este tipo con información real en un
 entorno corporativo deben evaluarse las políticas aplicables de:
 
--   privacidad;
--   tratamiento de geolocalización;
--   seguridad;
--   retención de información;
--   servicios externos;
--   acceso de usuarios.
+- privacidad;
+- tratamiento de geolocalización;
+- seguridad;
+- retención de información;
+- servicios externos;
+- acceso de usuarios.
 
 Las capturas, ejemplos y datos publicados en este repositorio deberían
 utilizar exclusivamente información ficticia.
