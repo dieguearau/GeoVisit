@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeoVisit | Agenda inteligente de visitas</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<style>
+  :root{
+    --bg:#f5f6f8;
+    --card:#ffffff;
+    --ink:#1c1d21;
+    --muted:#6b7280;
+    --border:#e4e7ec;
+    --primary:#f4c430;
+    --primary-hover:#dfb321;
+    --danger:#c93737;
+    --success:#19734b;
+    --shadow:0 12px 30px rgba(20, 24, 32, .07);
+    --radius:18px;
+  }
+
+  *{
+    box-sizing:border-box;
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter", sans-serif;
+  }
+
+  .app{
+    width:min(1100px, calc(100% - 32px));
+    margin:40px auto;
+  }
+
+  .header{
+    margin-bottom:22px;
+  }
+
+  .header h1{
+    margin:0;
+    font-family:"Poppins", sans-serif;
+    font-size:clamp(26px, 4vw, 38px);
+  }
+
+  .header h4 {
+  margin: 4px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  }
+
+  .header p{
+    margin:0;
+    color:var(--muted);
+    line-height:1.55;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:24px;
+    margin-bottom:22px;
+  }
+
+  .form-grid{
+    display:grid;
+    grid-template-columns:1fr .8fr auto;
+    gap:14px;
+    align-items:end;
+  }
+
+  label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+  }
+
+  input{
+    width:100%;
+    height:48px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:0 14px;
+    font:inherit;
+    outline:none;
+    background:#fff;
+  }
+
+  input:focus{
+    border-color:#bbb;
+    box-shadow:0 0 0 3px rgba(244,196,48,.18);
+  }
+
+  button{
+    height:48px;
+    border:0;
+    border-radius:12px;
+    padding:0 18px;
+    font:inherit;
+    font-weight:700;
+    cursor:pointer;
+    transition:.18s ease;
+  }
+
+  button:disabled{
+    cursor:not-allowed;
+    opacity:.55;
+  }
+
+  .btn-primary{
+    background:var(--primary);
+    color:#17140b;
+  }
+
+  .btn-primary:hover:not(:disabled){
+    background:var(--primary-hover);
+  }
+
+  .btn-secondary{
+    background:#202225;
+    color:#fff;
+  }
+
+  .btn-danger{
+    background:#fff;
+    color:var(--danger);
+    border:1px solid #edc7c7;
+  }
+
+  .status{
+    margin-top:16px;
+    min-height:24px;
+    font-size:14px;
+    color:var(--muted);
+  }
+
+  .status.ok{
+    color:var(--success);
+  }
+
+  .status.error{
+    color:var(--danger);
+  }
+
+  .toolbar{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:center;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+  }
+
+  .toolbar h2{
+    margin:0;
+    font-family:"Poppins", sans-serif;
+    font-size:20px;
+  }
+
+  .actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .table-wrap{
+    overflow:auto;
+    border:1px solid var(--border);
+    border-radius:14px;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:920px;
+  }
+
+  th, td{
+    padding:13px 14px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    vertical-align:top;
+    font-size:14px;
+  }
+
+  th{
+    position:sticky;
+    top:0;
+    background:#f8f9fb;
+    font-weight:700;
+    white-space:nowrap;
+  }
+
+  tbody tr:last-child td{
+    border-bottom:0;
+  }
+
+  .empty{
+    text-align:center;
+    color:var(--muted);
+    padding:34px;
+  }
+
+  .badge{
+    display:inline-block;
+    border-radius:999px;
+    padding:5px 9px;
+    white-space:nowrap;
+    font-weight:600;
+  }
+
+  .badge-good{ background:#eaf7f0; color:var(--success); }
+  .badge-mid{ background:#fff4db; color:#9a6700; }
+  .badge-low{ background:#fdecec; color:var(--danger); }
+
+  .map-link{
+    color:#202225;
+    font-weight:600;
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+
+  .footer-note{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+    margin-top:14px;
+  }
+
+  @media (max-width:700px){
+    .app{
+      width:min(100% - 20px, 1100px);
+      margin:20px auto;
+    }
+
+    .card{
+      padding:18px;
+    }
+
+    .form-grid{
+      grid-template-columns:1fr;
+    }
+
+    .form-grid button{
+      width:100%;
+    }
+
+    .actions{
+      width:100%;
+    }
+
+    .actions button{
+      flex:1;
+    }
+  }
+
+/* --------------- GeoVisit v2: agenda ----------------------------- */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}.metric{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.metric strong{display:block;font-family:"Poppins";font-size:30px}.metric span{color:var(--muted);font-size:12px;font-weight:700}.agenda-list{display:grid;gap:12px}.agenda-card{border:1px solid var(--border);border-radius:14px;padding:16px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}.agenda-meta{color:var(--muted);font-size:13px;line-height:1.55}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}.filter-btn{height:36px;background:#fff;border:1px solid var(--border);font-size:13px}.filter-btn.active{background:#202225;color:#fff}.badge-pending{background:#fff4db;color:#9a6700}.badge-done{background:#eaf7f0;color:var(--success)}.manual-grid{display:grid;grid-template-columns:1fr .8fr auto;gap:14px;align-items:end}.file-btn{height:48px;border:1px solid var(--border);border-radius:12px;padding:0 18px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;background:#fff}.counter{color:var(--muted);font-size:13px;margin-top:4px}@media(max-width:700px){.metrics{grid-template-columns:repeat(3,1fr);gap:8px}.metric{padding:12px}.metric strong{font-size:24px}.agenda-card,.manual-grid{grid-template-columns:1fr}.agenda-card button{width:100%}}
+
+.result-tag{display:inline-block;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.result-visited{background:#eaf7f0;color:#19734b}
+.result-follow{background:#fff4db;color:#9a6700}
+.result-notfound{background:#fdecec;color:#c93737}
+.modal-backdrop{position:fixed;inset:0;background:rgba(17,24,39,.48);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+.modal-backdrop.visible{display:flex}
+.modal{width:min(430px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.22)}
+.modal h3{margin:0 0 6px;font-family:"Poppins",sans-serif;font-size:20px}
+.modal p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.5}
+.result-options{display:grid;gap:10px}
+.result-option{width:100%;min-height:48px;justify-content:flex-start;border:1px solid var(--border);background:#fff;color:var(--ink)}
+.result-option:hover{background:#f8f9fb}
+.modal-cancel{width:100%;margin-top:14px;background:#f5f6f8;color:var(--muted)}
+</style>
+</head>
+
+<body>
+<main class="app">
+  <section class="header">
+    <h1>GeoVisit</h1>
+    <p><strong>Agenda inteligente de visitas en campo mediante geolocalización.</strong></p><br>
+    <p>Planifique visitas desde Excel, registre la ubicación real y exporte una base preparada para su posterior análisis.</p>
+  </section>
+
+  <section class="metrics">
+    <div class="metric"><strong id="mTotal">0</strong><span>PLANIFICADAS</span></div>
+    <div class="metric"><strong id="mPending">0</strong><span>PENDIENTES</span></div>
+    <div class="metric"><strong id="mDone">0</strong><span>REALIZADAS</span></div>
+  </section>
+
+  <section class="card">
+    <div class="toolbar">
+      <div><h2>Agenda de visitas</h2><div class="counter">Importe una agenda o recupere una sesión de GeoVisit.</div></div>
+      <div class="actions">
+        <label class="file-btn" for="agendaInput">Importar agenda</label><input id="agendaInput" type="file" accept=".xlsx,.xls" style="display:none">
+        <label class="file-btn" for="sessionInput">Importar visitas</label><input id="sessionInput" type="file" accept=".xlsx,.xls" style="display:none">
+        <button id="btnExport" class="btn-secondary">Exportar Excel</button>
+        <button id="btnClear" class="btn-danger">Borrar datos</button>
+      </div>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="pending">Pendientes</button>
+      <button class="filter-btn" data-filter="done">Realizadas</button>
+    </div>
+    <div id="agendaList" class="agenda-list"></div>
+    <div id="agendaStatus" class="status"></div>
+  </section>
+
+  <section class="card">
+    <div class="toolbar"><h2>Visita no planificada</h2></div>
+    <div class="manual-grid">
+      <div><label for="manualId">ID de contrato</label><input id="manualId" type="text" placeholder="Ej.: 123456"></div>
+      <div><label for="manualResult">Resultado</label><select id="manualResult" style="width:100%;height:48px;border:1px solid var(--border);border-radius:12px;padding:0 14px;font:inherit;background:#fff"><option>Visitado</option><option>No localizado</option><option>Requiere seguimiento</option></select></div>
+      <button id="btnManual" class="btn-primary">Registrar ubicación</button>
+    </div>
+    <div id="manualStatus" class="status"></div>
+  </section>
+
+  <section class="card">
+    <div class="toolbar"><h2>Historial de visitas</h2></div>
+    <div class="table-wrap"><table style="min-width:1450px"><thead><tr>
+      <th>ID contrato</th><th>Cliente</th><th>Tipo</th><th>Resultado</th><th>Dirección planificada</th><th>Lat. plan.</th><th>Long. plan.</th><th>Lat. real</th><th>Long. real</th><th>Distancia (m)</th><th>Precisión</th><th>Fecha</th><th>Hora</th><th>Dirección real</th><th>Mapa</th>
+    </tr></thead><tbody id="historyBody"></tbody></table></div>
+    <div class="footer-note">La dirección real se obtiene mediante geocodificación inversa de OpenStreetMap/Nominatim. © OpenStreetMap contributors.</div>
+  </section>
+</main>
+<div id="resultModal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
+    <h3 id="resultModalTitle">Resultado de la visita</h3>
+    <p>Seleccione una opción para continuar con el registro de ubicación.</p>
+    <div class="result-options">
+      <button class="result-option" data-result="Visitado"><span class="result-tag result-visited">Visitado</span></button>
+      <button class="result-option" data-result="Requiere seguimiento"><span class="result-tag result-follow">Requiere seguimiento</span></button>
+      <button class="result-option" data-result="No localizado"><span class="result-tag result-notfound">No localizado</span></button>
+    </div>
+    <button id="resultModalCancel" class="modal-cancel">Cancelar</button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY="geovisit_v2"; let db=loadDB(), currentFilter="all";
+const $=id=>document.getElementById(id);
+function loadDB(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{agenda:[],visits:[]}}catch{return {agenda:[],visits:[]}}}
+function saveDB(){localStorage.setItem(STORAGE_KEY,JSON.stringify(db))}
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function coord(v){return Number(v).toFixed(6)}
+function setStatus(el,msg,type=""){el.textContent=msg;el.className=`status ${type}`.trim()}
+function mapUrl(lat,lon){return `https://www.google.com/maps?q=${encodeURIComponent(lat)},${encodeURIComponent(lon)}`}
+function accuracyClass(v){v=Number(v);return v<=30?"badge-good":v<=100?"badge-mid":"badge-low"}
+function resultClass(v){return v==="Visitado"?"result-visited":v==="Requiere seguimiento"?"result-follow":v==="No localizado"?"result-notfound":""}
+function resultTag(v){return `<span class="result-tag ${resultClass(v)}">${esc(v||"")}</span>`}
+
+function haversine(a,b,c,d){const R=6371000,r=x=>x*Math.PI/180,p1=r(a),p2=r(c),dp=r(c-a),dl=r(d-b),x=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;return Math.round(R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x)))}
+async function getAddress(lat,lon){const u=`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&zoom=18&addressdetails=1`,r=await fetch(u,{headers:{Accept:"application/json"}});if(!r.ok)throw new Error("No se pudo obtener la dirección.");const j=await r.json();return j.display_name||"Dirección no disponible"}
+function getPosition(){return new Promise((ok,no)=>{if(!navigator.geolocation)return no(new Error("Este navegador no admite geolocalización."));navigator.geolocation.getCurrentPosition(ok,no,{enableHighAccuracy:true,timeout:15000,maximumAge:0})})}
+function doneIds(){return new Set(db.visits.filter(v=>v.planned&&v.agendaId).map(v=>v.agendaId))}
+function render(){const done=doneIds();$("mTotal").textContent=db.agenda.length;$("mDone").textContent=db.agenda.filter(a=>done.has(a.agendaId)).length;$("mPending").textContent=db.agenda.filter(a=>!done.has(a.agendaId)).length;
+ let items=db.agenda.map(a=>({...a,done:done.has(a.agendaId)}));if(currentFilter==="pending")items=items.filter(x=>!x.done);if(currentFilter==="done")items=items.filter(x=>x.done);
+ $("agendaList").innerHTML=items.length?items.map(a=>`<article class="agenda-card"><div><div><strong>${esc(a.contractId)}</strong> <span class="badge ${a.done?'badge-done':'badge-pending'}">${a.done?'Realizada':'Pendiente'}</span></div><div class="agenda-meta">${a.client?`Cliente: ${esc(a.client)}<br>`:""}${a.plannedAddress?`${esc(a.plannedAddress)}<br>`:""}${coord(a.plannedLat)}, ${coord(a.plannedLon)}</div></div><button class="${a.done?'btn-secondary':'btn-primary'}" ${a.done?'disabled':''} onclick="registerPlanned('${a.agendaId}')">${a.done?'Registrada':'Registrar visita'}</button></article>`).join(""):'<div class="empty">No hay visitas para mostrar.</div>';
+ $("historyBody").innerHTML=db.visits.length?db.visits.map(v=>`<tr><td><strong>${esc(v.contractId)}</strong></td><td>${esc(v.client)}</td><td>${v.planned?'Planificada':'No planificada'}</td><td>${resultTag(v.result)}</td><td>${esc(v.plannedAddress)}</td><td>${v.plannedLat??''}</td><td>${v.plannedLon??''}</td><td>${esc(v.realLat)}</td><td>${esc(v.realLon)}</td><td>${v.distanceMeters??''}</td><td><span class="badge ${accuracyClass(v.accuracyMeters)}">${esc(v.accuracyMeters)} m</span></td><td>${esc(v.date)}</td><td>${esc(v.time)}</td><td>${esc(v.realAddress)}</td><td><a class="map-link" href="${mapUrl(v.realLat,v.realLon)}" target="_blank">Abrir mapa</a></td></tr>`).join(""):'<tr><td colspan="15" class="empty">Todavía no hay visitas registradas.</td></tr>';
+ $("btnExport").disabled=!db.visits.length;$("btnClear").disabled=!db.agenda.length&&!db.visits.length}
+async function createVisit(base,result,statusEl){try{setStatus(statusEl,"Obteniendo ubicación del dispositivo...");const p=await getPosition(),lat=p.coords.latitude,lon=p.coords.longitude,acc=Math.round(p.coords.accuracy);let address="Dirección no disponible";try{setStatus(statusEl,"Ubicación obtenida. Consultando dirección...");address=await getAddress(lat,lon)}catch(e){console.error(e)}const now=new Date(),dist=Number.isFinite(base.plannedLat)&&Number.isFinite(base.plannedLon)?haversine(base.plannedLat,base.plannedLon,lat,lon):null;db.visits.unshift({agendaId:base.agendaId||null,contractId:base.contractId,client:base.client||"",planned:!!base.agendaId,plannedAddress:base.plannedAddress||"",plannedLat:Number.isFinite(base.plannedLat)?base.plannedLat:null,plannedLon:Number.isFinite(base.plannedLon)?base.plannedLon:null,result,realLat:coord(lat),realLon:coord(lon),distanceMeters:dist,accuracyMeters:acc,date:now.toLocaleDateString("es-UY"),time:now.toLocaleTimeString("es-UY",{hour:"2-digit",minute:"2-digit",second:"2-digit"}),realAddress:address});saveDB();render();setStatus(statusEl,`Visita registrada correctamente${dist!==null?`. Distancia al punto: ${dist} m`:""}. Precisión: ${acc} m.`,"ok")}catch(e){let m=e.message||"No se pudo obtener la ubicación.";if(e.code===1)m="El permiso de ubicación fue rechazado.";if(e.code===2)m="La ubicación no está disponible.";if(e.code===3)m="Se agotó el tiempo para obtener la ubicación.";setStatus(statusEl,m,"error")}}
+let resultResolver=null;
+function chooseResult(){return new Promise(resolve=>{resultResolver=resolve;$("resultModal").classList.add("visible");$("resultModal").setAttribute("aria-hidden","false")})}
+function closeResultModal(value=null){$("resultModal").classList.remove("visible");$("resultModal").setAttribute("aria-hidden","true");if(resultResolver){const resolve=resultResolver;resultResolver=null;resolve(value)}}
+document.querySelectorAll(".result-option").forEach(button=>button.addEventListener("click",()=>closeResultModal(button.dataset.result)));
+$("resultModalCancel").addEventListener("click",()=>closeResultModal(null));
+$("resultModal").addEventListener("click",event=>{if(event.target===$("resultModal"))closeResultModal(null)});
+window.registerPlanned=async id=>{const a=db.agenda.find(x=>x.agendaId===id);if(!a)return;const result=await chooseResult();if(!result)return;await createVisit(a,result,$("agendaStatus"))};
+async function importAgenda(file){if(!file)return;try{const wb=XLSX.read(await file.arrayBuffer(),{type:"array"}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:""});if(!rows.length)throw new Error("El archivo no contiene registros.");const req=["ID Contrato","Latitud planificada","Longitud planificada"],miss=req.filter(c=>!Object.keys(rows[0]).includes(c));if(miss.length)throw new Error(`Faltan columnas: ${miss.join(", ")}`);db={agenda:rows.map((r,i)=>{const lat=Number(r["Latitud planificada"]),lon=Number(r["Longitud planificada"]);if(!String(r["ID Contrato"]).trim()||!Number.isFinite(lat)||!Number.isFinite(lon))throw new Error(`Fila ${i+2} inválida.`);return{agendaId:`${Date.now()}_${i}`,contractId:String(r["ID Contrato"]).trim(),client:String(r["Cliente"]||"").trim(),plannedAddress:String(r["Dirección planificada"]||"").trim(),plannedLat:lat,plannedLon:lon};}),visits:[]};saveDB();render();setStatus($("agendaStatus"),`Agenda importada: ${db.agenda.length} visitas planificadas.`,"ok")}catch(e){setStatus($("agendaStatus"),`No se pudo importar la agenda. ${e.message}`,"error")}finally{$("agendaInput").value=""}}
+async function importSession(file){if(!file)return;try{const wb=XLSX.read(await file.arrayBuffer(),{type:"array"});if(!wb.SheetNames.includes("Agenda")||!wb.SheetNames.includes("Visitas"))throw new Error("El archivo no corresponde a GeoVisit v2.");const ar=XLSX.utils.sheet_to_json(wb.Sheets.Agenda,{defval:""}),vr=XLSX.utils.sheet_to_json(wb.Sheets.Visitas,{defval:""});db.agenda=ar.map((r,i)=>({agendaId:String(r["ID Agenda"]||`import_${i}`),contractId:String(r["ID Contrato"]||"").trim(),client:String(r.Cliente||"").trim(),plannedAddress:String(r["Dirección planificada"]||"").trim(),plannedLat:Number(r["Latitud planificada"]),plannedLon:Number(r["Longitud planificada"])}));db.visits=vr.map(r=>({agendaId:r["ID Agenda"]?String(r["ID Agenda"]):null,contractId:String(r["ID Contrato"]||"").trim(),client:String(r.Cliente||"").trim(),planned:String(r.Tipo)==="Planificada",plannedAddress:String(r["Dirección planificada"]||"").trim(),plannedLat:r["Latitud planificada"]===""?null:Number(r["Latitud planificada"]),plannedLon:r["Longitud planificada"]===""?null:Number(r["Longitud planificada"]),result:String(r.Resultado||"").trim(),realLat:coord(r["Latitud real"]),realLon:coord(r["Longitud real"]),distanceMeters:r["Distancia (m)"]===""?null:Number(r["Distancia (m)"]),accuracyMeters:Number(r["Precisión (m)"]),date:String(r.Fecha||""),time:String(r.Hora||""),realAddress:String(r["Dirección real"]||"").trim()}));saveDB();render();setStatus($("agendaStatus"),`Sesión recuperada: ${db.agenda.length} planificadas y ${db.visits.length} registradas.`,"ok")}catch(e){setStatus($("agendaStatus"),`No se pudo importar la sesión. ${e.message}`,"error")}finally{$("sessionInput").value=""}}
+function exportExcel(){
+  if(!db.visits.length){
+    setStatus($("agendaStatus"),"No hay visitas registradas para exportar.","error");
+    return;
+  }
+
+  const visits=db.visits.map(v=>({
+    "ID Contrato":v.contractId,
+    "Cliente":v.client||"",
+    "Estado":v.planned?"Planificada":"No planificada",
+    "Resultado":v.result||"",
+    "Dirección planificada":v.plannedAddress||"",
+    "Latitud planificada":v.plannedLat??"",
+    "Longitud planificada":v.plannedLon??"",
+    "Latitud real":Number(v.realLat),
+    "Longitud real":Number(v.realLon),
+    "Distancia (m)":v.distanceMeters??"",
+    "Precisión (m)":v.accuracyMeters,
+    "Fecha":v.date,
+    "Hora":v.time,
+    "Dirección real":v.realAddress||"",
+    "Mapa":mapUrl(v.realLat,v.realLon)
+  }));
+
+  const ws=XLSX.utils.json_to_sheet(visits);
+  ws["!cols"]=[
+    {wch:18},{wch:24},{wch:18},{wch:24},{wch:45},
+    {wch:20},{wch:20},{wch:16},{wch:16},{wch:16},
+    {wch:16},{wch:14},{wch:12},{wch:70},{wch:55}
+  ];
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,"Visitas");
+  XLSX.writeFile(wb,`GeoVisit_visitas_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+$("agendaInput").addEventListener("change",e=>importAgenda(e.target.files[0]));$("sessionInput").addEventListener("change",e=>importSession(e.target.files[0]));$("btnExport").addEventListener("click",exportExcel);$("btnClear").addEventListener("click",()=>{if(confirm("¿Desea borrar la agenda y todas las visitas almacenadas?")){db={agenda:[],visits:[]};saveDB();render();setStatus($("agendaStatus"),"Los datos fueron eliminados.")}});$("btnManual").addEventListener("click",async()=>{const id=$("manualId").value.trim();if(!id)return setStatus($("manualStatus"),"Ingrese un ID de contrato.","error");await createVisit({contractId:id},$("manualResult").value,$("manualStatus"));$("manualId").value=""});document.querySelectorAll(".filter-btn").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));b.classList.add("active");currentFilter=b.dataset.filter;render()}));render();
+</script>
+</body>
+</html>
