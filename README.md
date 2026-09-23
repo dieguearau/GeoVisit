@@ -6,10 +6,12 @@
 y validar visitas en campo mediante geolocalización**, con importación y
 exportación a Excel.
 
-`HTML5` · `CSS3` · `JavaScript` · `Geolocation API` · `SheetJS` ·
-`OpenStreetMap`
-
-> **Estado del proyecto:** MVP funcional / Proof of Concept
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/Geolocation_API-4285F4?style=flat&logo=googlemaps&logoColor=white">
+<img src="https://img.shields.io/badge/SheetJS-217346?style=flat&logo=microsoftexcel&logoColor=white">
+<img src="https://img.shields.io/badge/OpenStreetMap-7EBC6F?style=flat&logo=openstreetmap&logoColor=white">
 
 ------------------------------------------------------------------------
 
