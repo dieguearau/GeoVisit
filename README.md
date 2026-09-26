@@ -6,8 +6,6 @@
 y validar visitas en campo mediante geolocalización**, con importación y
 exportación a Excel.
 
-### 🌐 Acceso directo
-
 👉 **[Abrir GeoVisit](https://dieguearau.github.io/GeoVisit/)**
 
 <br>
